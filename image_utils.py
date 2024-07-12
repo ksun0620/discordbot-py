@@ -1,17 +1,21 @@
 from PIL import Image, ImageDraw, ImageFont
 import os
 
+# 클랜 로고 경로 설정 (클라우드 호스팅 환경에 맞게 절대 경로 사용)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CLAN_LOGO_DIR = os.path.join(BASE_DIR, 'clanlogo')
+
 def create_leaderboard_image(players):
     # 이미지 크기 및 배경색 설정
     width, height = 1000, 800
     background_color = (58, 58, 58)  # #3a3a3a 색상
     text_color = (255, 255, 255)  # 흰색 텍스트
     accent_color = (255, 215, 0)  # 골드 색상
-    font_path = "C:\\my_bot\\GmarketSansTTFMedium.ttf"  # GmarketSansTTFMedium 폰트 경로
+    font_path = os.path.join(BASE_DIR, "GmarketSansTTFMedium.ttf")  # GmarketSansTTFMedium 폰트 경로
     font_size_text = 25
     font_size_header = 28
     logo_size = (40, 40)
-    default_logo_path = "C:\\my_bot\\clanlogo\\transparent.png"  # 투명 로고 경로
+    default_logo_path = os.path.join(CLAN_LOGO_DIR, "transparent.png")  # 투명 로고 경로
 
     # 이미지 및 그리기 객체 생성
     image = Image.new("RGBA", (width, height), background_color)
@@ -54,7 +58,7 @@ def create_leaderboard_image(players):
         y_offset = margin_y + idx * line_height
 
         # 클랜 로고 삽입
-        clan_logo_path = f"C:\\my_bot\\clanlogo\\{clan}.png"
+        clan_logo_path = os.path.join(CLAN_LOGO_DIR, f"{clan}.png")
         if os.path.exists(clan_logo_path):
             logo = Image.open(clan_logo_path).resize(logo_size)
         else:
